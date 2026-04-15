@@ -1,17 +1,24 @@
 package com.telusko;
 
+import org.apache.catalina.Context;
+import org.apache.catalina.LifecycleException;
+import org.apache.catalina.startup.Tomcat;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+    public static void main(String[] args) throws LifecycleException {
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        Tomcat tomcat = new Tomcat();
+        tomcat.setPort(8080);
+        tomcat.getConnector();
+
+        Context context = tomcat.addContext("", null);
+
+        Tomcat.addServlet(context, "HelloServlet", new HelloServlet());
+        context.addServletMappingDecoded("/hello", "HelloServlet");
+
+        tomcat.start();
+        tomcat.getServer().await();
     }
 }
