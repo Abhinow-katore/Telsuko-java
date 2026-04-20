@@ -12,7 +12,8 @@ import java.io.IOException;
 public class HelloServlet extends HttpServlet {
     public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 //        super.service(req, res);
+        res.setContentType("text/html");
         System.out.println("In Service");
-        res.getWriter().println("Hello World");
+        res.getWriter().println("<h2><b>Hello World</b></h2>");
     }
 }
